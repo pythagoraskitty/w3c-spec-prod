@@ -62,3 +62,7 @@ export async function w3cEchidnaDeployment(
 
 	return { wgDecisionURL, cc, token: token, repository };
 }
+
+function shouldTryDeploy(githubEvent: GitHubContext["event_name"]) {
+	return githubEvent === "push";
+}
