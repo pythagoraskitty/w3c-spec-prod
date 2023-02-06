@@ -13,12 +13,10 @@ export function githubPagesDeployment(
 		githubContext.event.repository;
 	const ghPagesBranch = inputs.GH_PAGES_BRANCH;
 
-	if (!shouldTryDeploy(event)) {
-		return false;
-	}
-
 	const askedNotToDeploy = yesOrNo(ghPagesBranch) === false;
 	if (askedNotToDeploy || !ghPagesBranch) {
+		console.log(`Asked not to deploy: ${askedNotToDeploy}`);
+		console.log(`No GH Pages branch: ${!ghPagesBranch}`);
 		return false;
 	}
 
@@ -63,8 +61,4 @@ export async function w3cEchidnaDeployment(
 	const cc = inputs.W3C_NOTIFICATIONS_CC;
 
 	return { wgDecisionURL, cc, token: token, repository };
-}
-
-function shouldTryDeploy(githubEvent: GitHubContext["event_name"]) {
-	return githubEvent === "push" || githubEvent === "pull request";
 }
